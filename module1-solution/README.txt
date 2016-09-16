@@ -1,0 +1,1 @@
+This folder contains my solution for the first assignment from the course [Single Page Web Applications with AngularJS](https://www.coursera.org/learn/single-page-web-apps-with-angularjs) hosted on [Coursera.org](https://www.coursera.org)
