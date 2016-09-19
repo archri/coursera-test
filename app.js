@@ -1,13 +1,30 @@
-(function() {
+(function () {
   'use strict';
 
-  angular.module('SomeApplication', [])
-  .filter('replaceSome', replaceSomeFilterFactory);
+  angular.module('watchersApplication', [])
+  .controller('watchersController', watchersController);
 
-  function replaceSomeFilterFactory() {
-    return function (input) {
-      input = input || "";
-      return input.replace(/some/g, "another");
+  watchersController.$inject = ['$scope'];
+  function watchersController($scope) {
+    $scope.setInitialValue = function () {
+      $scope.number = 10;
+    };
+
+    $scope.incrementValue = function () {
+      $scope.number++;
+    };
+
+    $scope.$watch('number', function (newValue, oldValue) {
+      console.log("old: ", oldValue);
+      console.log("new: ", newValue);
+    });
+
+    $scope.getWatchers = function () {
+      console.log( $scope.$$watchersCount, " watchers: ", $scope.$$watchers);
+    };
+
+    $scope.getScope = function () {
+      console.log($scope);
     };
   }
 })();

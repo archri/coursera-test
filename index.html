@@ -4,13 +4,14 @@
     <meta charset="utf-8">
     <script src="angular.js"></script>
     <script src="app.js"></script>
-    <title>Replace some filter</title>
+    <title>Watchers</title>
   </head>
-  <body ng-app="SomeApplication">
-    <h1>Replace some</h1>
-    <div>
-      <input ng-model="inputMessage" />
-      {{ inputMessage | replaceSome }}
+  <body ng-app="watchersApplication">
+    <div ng-controller="watchersController">
+      <button ng-click="getScope()">scope</button>
+      <button ng-click="getWatchers()">watchers</button>
+      <button ng-click="setInitialValue()">start</button>
+      <button ng-click="incrementValue()">increment</button>
     </div>
   </body>
 </html>
