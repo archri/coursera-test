@@ -38,16 +38,16 @@
     var promise1 = asyncFunction1();
 
     $scope.async = "start";
-    promise1.then(function(result) {
-      $scope.async = result;
-      var promise2 = asyncFunction2(true);
-      promise2.then(function(result) {
+    promise1
+      .then(function(result) {
         $scope.async = result;
-      }, function(error) {
+        return asyncFunction2(true);
+      })
+      .then(function(result) {
+        $scope.async = result;
+      })
+      .catch(function(error) {
         $scope.async = error;
       });
-    }, function(error) {
-      $scope.async = error;
-    });
   }
 })();
