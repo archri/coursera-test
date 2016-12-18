@@ -3,10 +3,25 @@
   angular.module('asyncApp', [])
          .controller('asyncController', asyncController);
 
-  asyncController.$inject = ['$scope'];
-  function asyncController($scope) {
-    $scope.async = 'async avriable text';
-  }
+  asyncController.$inject = ['$scope', '$q'];
+  function asyncController($scope, $q) {
+    function asyncFunction(param) {
+      var deferred = $q.defer();
 
-  console.log('hik');
+      if (param === true) {
+        deferred.resolve("success");
+      } else {
+        deferred.reject("failure");
+      }
+      return deferred.promise;
+    }
+
+    var promise = asyncFunction(false);
+
+    promise.then(function(result) {
+      $scope.async = result;
+    }, function(error) {
+      $scope.async = error;
+    });
+  }
 })();
