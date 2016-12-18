@@ -5,14 +5,18 @@
 
   asyncController.$inject = ['$scope', '$q', '$timeout'];
   function asyncController($scope, $q, $timeout) {
-    function asyncFunction1() {
+    function asyncFunction1(param) {
       // create deferred object
       var deferred = $q.defer();
 
       // asynchronous part
       $timeout(function () {
+        if (param === true) {
           deferred.resolve("first success");
-      }, 1000);
+        } else {
+          deferred.reject("first failure");
+        }
+      }, 7000);
 
       // return the promise
       return deferred.promise;
@@ -27,7 +31,7 @@
         if (param === true) {
           deferred.resolve("second success");
         } else {
-          deferred.reject("failure");
+          deferred.reject("second failure");
         }
       }, 3000);
 
@@ -35,16 +39,14 @@
       return deferred.promise;
     }
 
-    var promise1 = asyncFunction1();
+    var promise1 = asyncFunction1(false);
+    var promise2 = asyncFunction2(false);
 
     $scope.async = "start";
-    promise1
-      .then(function(result) {
-        $scope.async = result;
-        return asyncFunction2(true);
-      })
-      .then(function(result) {
-        $scope.async = result;
+    $q.all([promise1, promise2])
+      .then(function (response) {
+        console.log(response);
+        // $scope.async = response;
       })
       .catch(function(error) {
         $scope.async = error;
