@@ -3,16 +3,22 @@
   angular.module('asyncApp', [])
          .controller('asyncController', asyncController);
 
-  asyncController.$inject = ['$scope', '$q'];
-  function asyncController($scope, $q) {
+  asyncController.$inject = ['$scope', '$q', '$timeout'];
+  function asyncController($scope, $q, $timeout) {
     function asyncFunction(param) {
+      // create deferred object
       var deferred = $q.defer();
 
-      if (param === true) {
-        deferred.resolve("success");
-      } else {
-        deferred.reject("failure");
-      }
+      // asynchronous part
+      $timeout(function () {
+        if (param === true) {
+          deferred.resolve("success");
+        } else {
+          deferred.reject("failure");
+        }
+      }, 3000);
+
+      // return the promise
       return deferred.promise;
     }
 
